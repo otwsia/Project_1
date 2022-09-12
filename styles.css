@@ -1,6 +1,8 @@
 body {
   height: 800px;
-  width: 800px;
+  width: 1000px;
+  display: flex;
+  justify-content: center;
 }
 
 .game-window {
@@ -9,15 +11,73 @@ body {
 }
 
 .window-top {
-  height: 60%;
+  height: 50%;
   width: 100%;
-  background-image: url("./images/wallpaperflare.com_wallpaper.jpg");
-  background-size: cover;
+  background-image: url("./images/Window_top_background.png");
+  background-size: auto 100%;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.game-notification {
+  height: 25%;
+  width: 50%;
+  background-color: black;
+  margin: 5%;
+}
+
+.game-timer {
+  height: 25%;
+  width: 10%;
+  background-color: black;
 }
 
 .window-bottom {
-  height: 40%;
+  height: 50%;
   width: 100%;
-  background-color: rgb(253, 232, 206);
+  background-image: url("./images/ground-texture-line.png");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+.doll-lane {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+}
+
+.tree {
+  height: 100%;
+  width: auto;
+}
+
+.doll {
+  height: 25%;
+  width: auto;
+  position: absolute;
+  right: 5%;
+}
+
+.player-lane {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+#player {
+  height: 25%;
+  width: auto;
+  position: absolute;
+  left: 5px;
 }
