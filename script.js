@@ -24,7 +24,7 @@ async function startGame() {
   countdown();
 }
 
-startGame();
+window.addEventListener("click", () => startGame(), { once: true });
 
 //Timer
 let timer = 60;
@@ -66,7 +66,7 @@ async function start() {
   if (gameState == "running") {
     await sing(Math.random() * 3000 + 3000);
     this.turnForward();
-    await check(Math.random() * 3000 + 2000);
+    await check(Math.random() * 2000 + 2000);
     this.turnBack();
     this.start();
   }
@@ -106,4 +106,9 @@ async function checkGameStatus() {
     gameState = "end";
     gameNoti.innerText = "Congratulations, you won!";
   }
+  /* //testing block
+  if (character.style.left === "887px") {
+    gameState = "end";
+    gameNoti.innerText = "Congratulations, you won!";
+  } */
 }
