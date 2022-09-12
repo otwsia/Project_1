@@ -42,6 +42,8 @@ async function countdown() {
 }
 
 //Doll movement
+let lookForward = false;
+
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
 }
@@ -59,11 +61,13 @@ function sing(delay) {
 }
 
 async function start() {
-  await sing(Math.random() * 5000 + 3000);
-  this.turnForward();
-  await check(Math.random() * 3000 + 2000);
-  this.turnBack();
-  this.start();
+  if (gameState == "running") {
+    await sing(Math.random() * 5000 + 3000);
+    this.turnForward();
+    await check(Math.random() * 3000 + 2000);
+    this.turnBack();
+    this.start();
+  }
 }
 
 //Character movement
@@ -89,3 +93,5 @@ window.addEventListener("keydown", function (e) {
     }
   }
 });
+
+//Game logic
