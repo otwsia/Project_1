@@ -27,11 +27,11 @@ async function startGame() {
 startGame();
 
 //Timer
-let timer = 10;
+let timer = 60;
 const time = document.querySelector(".game-timer");
 
 async function countdown() {
-  while (timer > 0) {
+  while (timer > 0 && gameState == "running") {
     await delay(1000);
     timer--;
     time.innerText = timer;
@@ -46,10 +46,12 @@ let lookForward = false;
 
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
+  setTimeout(() => (lookForward = true), 400);
 }
 
 function turnBack() {
   document.querySelector(".doll").src = "./images/doll_green.png";
+  setTimeout(() => (lookForward = false), 200);
 }
 
 function check(delay) {
@@ -62,7 +64,7 @@ function sing(delay) {
 
 async function start() {
   if (gameState == "running") {
-    await sing(Math.random() * 5000 + 3000);
+    await sing(Math.random() * 3000 + 3000);
     this.turnForward();
     await check(Math.random() * 3000 + 2000);
     this.turnBack();
@@ -73,7 +75,7 @@ async function start() {
 //Character movement
 const character = document.getElementById("player");
 let currentLocation = "5px";
-const step = 5;
+const step = 3;
 let foot = "left";
 
 window.addEventListener("keydown", function (e) {
@@ -91,7 +93,17 @@ window.addEventListener("keydown", function (e) {
         foot = "left";
       }
     }
+    checkGameStatus();
   }
 });
 
 //Game logic
+async function checkGameStatus() {
+  if (lookForward === true) {
+    gameState = "end";
+    gameNoti.innerText = "You lost!";
+  } else if (character.style.left === "887px") {
+    gameState = "end";
+    gameNoti.innerText = "Congratulations, you won!";
+  }
+}

@@ -3,6 +3,7 @@ body {
   width: 1000px;
   display: flex;
   justify-content: center;
+  /* margin: auto; */
 }
 
 .game-window {
@@ -35,6 +36,8 @@ body {
   height: 25%;
   width: 10%;
   background-color: black;
+  /* border-color: solid grey;
+  border-width: 5%; */
   color: red;
   text-align: center;
   font-size: 11vh;
