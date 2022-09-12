@@ -25,14 +25,19 @@ body {
 .game-notification {
   height: 25%;
   width: 50%;
-  background-color: black;
+  color: black;
+  font-size: 5vh;
   margin: 5%;
+  text-align: center;
 }
 
 .game-timer {
   height: 25%;
   width: 10%;
   background-color: black;
+  color: red;
+  text-align: center;
+  font-size: 11vh;
 }
 
 .window-bottom {
