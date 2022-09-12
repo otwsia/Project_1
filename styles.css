@@ -1,0 +1,23 @@
+body {
+  height: 800px;
+  width: 800px;
+}
+
+.game-window {
+  height: 100%;
+  width: 100%;
+}
+
+.window-top {
+  height: 60%;
+  width: 100%;
+  background-image: url("./images/wallpaperflare.com_wallpaper.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.window-bottom {
+  height: 40%;
+  width: 100%;
+  background-color: rgb(253, 232, 206);
+}
