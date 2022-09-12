@@ -36,6 +36,9 @@ async function countdown() {
     timer--;
     time.innerText = timer;
   }
+  if (timer == 0) {
+    gameState = "end";
+  }
 }
 
 //Doll movement
