@@ -1,9 +1,33 @@
-function dollRotate() {
+//Game notification
+
+//Doll movement
+function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
 }
 
-setTimeout(dollRotate, 5000);
+function turnBack() {
+  document.querySelector(".doll").src = "./images/doll_green.png";
+}
 
+function check(delay) {
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+function sing(delay) {
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+async function start() {
+  await sing(Math.random() * 5000 + 3000);
+  this.turnForward();
+  await check(Math.random() * 3000 + 2000);
+  this.turnBack();
+  this.start();
+}
+
+start();
+
+//Character movement
 const character = document.getElementById("player");
 let currentLocation = "5px";
 const step = 5;
