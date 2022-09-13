@@ -106,6 +106,9 @@ async function checkGameStatus() {
     gameState = "end";
     gameNoti.innerText = "Congratulations, you won!";
   }
+  if (gameState == "end") {
+    character.src = "./images/tombstone.png";
+  }
   /* //testing block
   if (character.style.left === "887px") {
     gameState = "end";
