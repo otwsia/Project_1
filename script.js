@@ -37,7 +37,16 @@ async function countdown() {
     time.innerText = timer;
   }
   if (timer == 0) {
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px_shoot.png";
+    }
     gameState = "end";
+    await delay(150);
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px.png";
+    }
+    character.src = "./images/tombstone.png";
+    gameNoti.innerText = "You lost!";
   }
 }
 
@@ -98,16 +107,23 @@ window.addEventListener("keydown", function (e) {
 });
 
 //Game logic
+const turrets = document.querySelectorAll(".turret");
+
 async function checkGameStatus() {
-  if (lookForward === true) {
+  if (lookForward === true && gameState == "running") {
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px_shoot.png";
+    }
     gameState = "end";
+    await delay(150);
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px.png";
+    }
+    character.src = "./images/tombstone.png";
     gameNoti.innerText = "You lost!";
   } else if (character.style.left === "887px") {
     gameState = "end";
     gameNoti.innerText = "Congratulations, you won!";
-  }
-  if (gameState == "end") {
-    character.src = "./images/tombstone.png";
   }
   /* //testing block
   if (character.style.left === "887px") {
