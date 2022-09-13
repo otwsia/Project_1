@@ -47,6 +47,9 @@ async function countdown() {
     }
     character.src = "./images/tombstone.png";
     gameNoti.innerText = "You lost!";
+    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 4;
+    character_indicator.style.left = `${currentIndicatorLocation}px`;
+    character_indicator.src = "./images/loss_indicator.png";
   }
 }
 
@@ -55,12 +58,14 @@ let lookForward = false;
 
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
+  document.querySelector(".game-window").style.borderColor = "red";
   setTimeout(() => (lookForward = true), 400);
 }
 
 function turnBack() {
   document.querySelector(".doll").src = "./images/doll_green.png";
   setTimeout(() => (lookForward = false), 200);
+  document.querySelector(".game-window").style.borderColor = "green";
 }
 
 function check(delay) {
