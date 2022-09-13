@@ -93,6 +93,8 @@ body {
 .tree {
   height: 100%;
   width: auto;
+  position: absolute;
+  bottom: -10%;
 }
 
 .doll {
@@ -100,6 +102,7 @@ body {
   width: auto;
   position: absolute;
   right: 5%;
+  bottom: -10%;
 }
 
 .player-lane {
@@ -111,12 +114,28 @@ body {
   position: relative;
 }
 
+#ai-1 {
+  height: 27%;
+  width: auto;
+  position: absolute;
+  left: 8px;
+  bottom: 300px;
+}
+
+#ai-2 {
+  height: 24%;
+  width: auto;
+  position: absolute;
+  left: 5px;
+  bottom: 180px;
+}
+
 #player_indicator {
   height: 7%;
   width: auto;
   position: absolute;
   left: 18px;
-  bottom: 130px;
+  bottom: 110px;
 }
 
 #player {
@@ -124,4 +143,5 @@ body {
   width: auto;
   position: absolute;
   left: 5px;
+  bottom: 55px;
 }

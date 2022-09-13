@@ -22,6 +22,15 @@ async function startGame() {
   gameNoti.innerText = "Hold Space to move!";
   start();
   countdown();
+  aiMovement(
+    "ai_1",
+    ai_1,
+    ai1Foot,
+    ai1Position,
+    ai1Status,
+    ai1Termination,
+    ai_1.style.left
+  );
 }
 
 window.addEventListener("click", () => startGame(), { once: true });
@@ -111,19 +120,7 @@ function movement() {
 }
 
 window.addEventListener("keydown", function (e) {
-  const locale = player.style.left;
   if (e.code == "Space") {
-    // if (gameState == "running") {
-    //   currentLocation = parseFloat(currentLocation) + step;
-    //   character.style.left = `${currentLocation}px`;
-    //   if (foot == "left") {
-    //     character.src = "./images/character_right.png";
-    //     foot = "right";
-    //   } else {
-    //     character.src = "./images/character_left.png";
-    //     foot = "left";
-    //   }
-    // }
     if (gameState == "running") {
       movement();
     }
@@ -170,3 +167,70 @@ async function pose() {
   character_indicator.src = "./images/win_indicator.png";
   character.src = "./images/character_win.png";
 }
+
+//ai movement
+const ai_1 = document.querySelector("#ai-1");
+const ai_2 = document.querySelector("#ai-2");
+let ai1Foot = "left";
+let ai2Foot = "left";
+let ai1Status = "alive";
+let ai2Status = "alive";
+let ai1Position = "8px";
+let ai2Position = "5px";
+const ai1Termination = Math.floor(Math.random() * 300 + 500);
+const ai2Termination = Math.floor(Math.random() * 200 + 200);
+
+async function aiMovement(
+  imageFile,
+  ai,
+  aiFoot,
+  aiPosition,
+  aiStatus,
+  aiTermination
+) {
+  if (parseFloat(aiPosition) < aiTermination) {
+    while (lookForward === false && aiStatus === "alive") {
+      aiPosition = parseFloat(aiPosition) + step;
+      await delay(150);
+      console.log(aiPosition);
+      // ai.style.left = `${aiPosition}px`;
+      // console.log([ai].style.left);
+      // await delay(100);
+      // if (aiFoot == "left") {
+      //   [ai].src = `./images/${imageFile}_right.png`;
+      //   aiFoot = "right";
+      // } else {
+      //   [ai].src = `./images/${imageFile}_right.png`;
+      //   aiFoot = "left";
+      // }
+    }
+  }
+  // else {
+  //   while (aiStatus === "alive") {
+  //     aiPosition = parseFloat(aiPosition) + step;
+  //     aiStyle = `${aiPosition}px`;
+  //     if (aiFoot == "left") {
+  //       character.src = `./images/${ai}_right.png`;
+  //       aiFoot = "right";
+  //     } else {
+  //       character.src = `./images/${ai}_right.png`;
+  //       aiFoot = "left";
+  //     }
+  //     checkAiStatus(ai);
+  //   }
+  // }
+}
+
+// async function checkAiStatus(ai, aiStatus) {
+//   if (lookForward === true) {
+//     for (const turret of turrets) {
+//       turret.src = "./images/turret_px_shoot.png";
+//     }
+//     aiStatus = "dead";
+//     await delay(150);
+//     for (const turret of turrets) {
+//       turret.src = "./images/turret_px.png";
+//     }
+//     [ai].src = "./images/tombstone.png";
+//   }
+// }
