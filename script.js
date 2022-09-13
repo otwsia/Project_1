@@ -27,7 +27,7 @@ async function startGame() {
 window.addEventListener("click", () => startGame(), { once: true });
 
 //Timer
-let timer = 10;
+let timer = 60;
 const time = document.querySelector(".game-timer");
 
 async function countdown() {
