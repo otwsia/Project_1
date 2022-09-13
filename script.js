@@ -27,7 +27,7 @@ async function startGame() {
 window.addEventListener("click", () => startGame(), { once: true });
 
 //Timer
-let timer = 60;
+let timer = 10;
 const time = document.querySelector(".game-timer");
 
 async function countdown() {
@@ -58,14 +58,16 @@ let lookForward = false;
 
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
-  document.querySelector(".game-window").style.borderColor = "red";
+  document.querySelector(".game-window").style.borderColor = "#FF1205";
+  document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #FF1205";
   setTimeout(() => (lookForward = true), 400);
 }
 
 function turnBack() {
   document.querySelector(".doll").src = "./images/doll_green.png";
   setTimeout(() => (lookForward = false), 200);
-  document.querySelector(".game-window").style.borderColor = "green";
+  document.querySelector(".game-window").style.borderColor = "#32C732";
+  document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
 }
 
 function check(delay) {

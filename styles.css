@@ -4,13 +4,15 @@ body {
   display: flex;
   justify-content: center;
   margin: auto;
-  /* margin-top: 10px; */
+  margin-top: 5vh;
 }
 
 .game-window {
   height: 100%;
   width: 100%;
-  border-color: green;
+  border-radius: 0.5vh;
+  border-color: #32c732;
+  box-shadow: 0 0 1.5vh #32c732;
   border-style: solid;
   border-width: 1vh;
   padding: 0vh;
