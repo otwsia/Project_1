@@ -10,6 +10,10 @@ body {
 .game-window {
   height: 100%;
   width: 100%;
+  border-color: grey;
+  border-style: solid;
+  border-width: 1vh;
+  padding: 0vh;
 }
 
 .window-top {
@@ -34,6 +38,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .turrets {
@@ -50,16 +55,18 @@ body {
 }
 
 .game-timer {
-  height: 20%;
+  height: 14%;
   width: 10%;
   background-color: black;
-  border-color: solid grey;
-  border-width: 2%;
-  color: red;
+  border-color: grey;
+  border-style: solid;
+  border-width: 0.75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: "Silkscreen", cursive;
-  text-align: center;
+  color: red;
   font-size: 7vh;
-  margin: 2%;
 }
 
 .window-bottom {
@@ -100,6 +107,14 @@ body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
+}
+
+#player_indicator {
+  height: 7%;
+  width: auto;
+  position: absolute;
+  left: 18px;
+  bottom: 130px;
 }
 
 #player {

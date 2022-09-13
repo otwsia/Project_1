@@ -83,24 +83,42 @@ async function start() {
 
 //Character movement
 const character = document.getElementById("player");
-let currentLocation = "5px";
+const character_indicator = document.getElementById("player_indicator");
+let currentPlayerLocation = "5px";
+let currentIndicatorLocation = "18px";
 const step = 3;
 let foot = "left";
+
+function movement() {
+  currentPlayerLocation = parseFloat(currentPlayerLocation) + step;
+  character.style.left = `${currentPlayerLocation}px`;
+  currentIndicatorLocation = parseFloat(currentIndicatorLocation) + step;
+  character_indicator.style.left = `${currentIndicatorLocation}px`;
+  if (foot == "left") {
+    character.src = "./images/character_right.png";
+    foot = "right";
+  } else {
+    character.src = "./images/character_left.png";
+    foot = "left";
+  }
+}
 
 window.addEventListener("keydown", function (e) {
   const locale = player.style.left;
   if (e.code == "Space") {
+    // if (gameState == "running") {
+    //   currentLocation = parseFloat(currentLocation) + step;
+    //   character.style.left = `${currentLocation}px`;
+    //   if (foot == "left") {
+    //     character.src = "./images/character_right.png";
+    //     foot = "right";
+    //   } else {
+    //     character.src = "./images/character_left.png";
+    //     foot = "left";
+    //   }
+    // }
     if (gameState == "running") {
-      currentLocation = parseFloat(currentLocation) + step;
-      character.style.left = `${currentLocation}px`;
-      console.log(character.src);
-      if (foot == "left") {
-        character.src = "./images/character_right.png";
-        foot = "right";
-      } else {
-        character.src = "./images/character_left.png";
-        foot = "left";
-      }
+      movement();
     }
     checkGameStatus();
   }
@@ -119,15 +137,29 @@ async function checkGameStatus() {
     for (const turret of turrets) {
       turret.src = "./images/turret_px.png";
     }
+    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 4;
+    character_indicator.style.left = `${currentIndicatorLocation}px`;
+    character_indicator.src = "./images/loss_indicator.png";
     character.src = "./images/tombstone.png";
     gameNoti.innerText = "You lost!";
-  } else if (character.style.left === "887px") {
+  } else if (character.style.left === "887px" && gameState == "running") {
     gameState = "end";
     gameNoti.innerText = "Congratulations, you won!";
+    pose();
   }
-  /* //testing block
-  if (character.style.left === "887px") {
-    gameState = "end";
-    gameNoti.innerText = "Congratulations, you won!";
-  } */
+}
+
+//Pose
+async function pose() {
+  await delay(500);
+  character.src = "./images/character_look_back.png";
+  await delay(1500);
+  for (let i = 0; i < 10; i++) {
+    movement();
+    await delay(300);
+  }
+  currentIndicatorLocation = parseFloat(currentIndicatorLocation) - 5;
+  character_indicator.style.left = `${currentIndicatorLocation}px`;
+  character_indicator.src = "./images/win_indicator.png";
+  character.src = "./images/character_win.png";
 }
