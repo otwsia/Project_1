@@ -22,15 +22,8 @@ async function startGame() {
   gameNoti.innerText = "Hold Space to move!";
   start();
   countdown();
-  // aiMovement(
-  //   "ai_1",
-  //   ai_1,
-  //   ai1Foot,
-  //   ai1Position,
-  //   ai1Status,
-  //   ai1Termination,
-  //   ai_1.style.left
-  // );
+  move(ai_1);
+  move(ai_2);
 }
 
 window.addEventListener("click", () => startGame(), { once: true });
@@ -40,12 +33,12 @@ let timer = 60;
 const time = document.querySelector(".game-timer");
 
 async function countdown() {
-  while (timer > 0 && gameState == "running") {
+  while (timer > 0) {
     await delay(1000);
     timer--;
     time.innerText = timer;
   }
-  if (timer == 0) {
+  if (timer == 0 && gameState == "running") {
     for (const turret of turrets) {
       turret.src = "./images/turret_px_shoot.png";
     }
@@ -74,7 +67,11 @@ function turnForward() {
 
 function turnBack() {
   document.querySelector(".doll").src = "./images/doll_green.png";
-  setTimeout(() => (lookForward = false), 200);
+  setTimeout(() => {
+    lookForward = false;
+    move(ai_1);
+    move(ai_2);
+  }, 200);
   document.querySelector(".game-window").style.borderColor = "#32C732";
   document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
 }
@@ -88,12 +85,12 @@ function sing(delay) {
 }
 
 async function start() {
-  if (gameState == "running") {
+  while (timer > 0) {
     await sing(Math.random() * 3000 + 3000);
-    this.turnForward();
+    turnForward();
     await check(Math.random() * 2000 + 2000);
-    this.turnBack();
-    this.start();
+    turnBack();
+    return start();
   }
 }
 
@@ -102,7 +99,7 @@ const character = document.getElementById("player");
 const character_indicator = document.getElementById("player_indicator");
 let currentPlayerLocation = "5px";
 let currentIndicatorLocation = "16px";
-const step = 3;
+const step = 2.5;
 let foot = "left";
 
 function movement() {
@@ -142,17 +139,19 @@ async function fireTurrets() {
 }
 
 async function checkGameStatus() {
-  if (lookForward === true && gameState == "running") {
-    fireTurrets();
-    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 3;
-    character_indicator.style.left = `${currentIndicatorLocation}px`;
-    character_indicator.src = "./images/loss_indicator.png";
-    character.src = "./images/tombstone.png";
-    gameNoti.innerText = "You lost!";
-  } else if (character.style.left === "887px" && gameState == "running") {
-    gameState = "end";
-    gameNoti.innerText = "Congratulations, you won!";
-    pose();
+  if (gameState == "running") {
+    if (lookForward === true) {
+      fireTurrets();
+      currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 3;
+      character_indicator.style.left = `${currentIndicatorLocation}px`;
+      character_indicator.src = "./images/loss_indicator.png";
+      character.src = "./images/tombstone.png";
+      gameNoti.innerText = "You lost!";
+    } else if (parseFloat(character.style.left) > 887) {
+      gameState = "end";
+      gameNoti.innerText = "Congratulations, you won!";
+      pose();
+    }
   }
 }
 
@@ -172,68 +171,79 @@ async function pose() {
 }
 
 //ai movement
-// const ai_1 = document.querySelector("#ai-1");
-// const ai_2 = document.querySelector("#ai-2");
-// let ai1Foot = "left";
-// let ai2Foot = "left";
-// let ai1Status = "alive";
-// let ai2Status = "alive";
-// let ai1Position = "8px";
-// let ai2Position = "5px";
-// const ai1Termination = Math.floor(Math.random() * 300 + 500);
-// const ai2Termination = Math.floor(Math.random() * 200 + 200);
+const ai_1 = {
+  name: "ai_1",
+  tag: function () {
+    return document.querySelector("#ai-1");
+  },
+  foot: "left",
+  status: "alive",
+  position: "8px",
+  termination: function () {
+    return Math.floor(Math.random() * 200 + 400);
+  },
+  step: function () {
+    return Math.ceil(Math.random() * 3 + 1);
+  },
+};
 
-// async function aiMovement(
-//   imageFile,
-//   ai,
-//   aiFoot,
-//   aiPosition,
-//   aiStatus,
-//   aiTermination
-// ) {
-//   if (parseFloat(aiPosition) < aiTermination) {
-//     while (lookForward === false && aiStatus === "alive") {
-//       aiPosition = parseFloat(aiPosition) + step;
-//       await delay(150);
-//       console.log(aiPosition);
-// ai.style.left = `${aiPosition}px`;
-// console.log([ai].style.left);
-// await delay(100);
-// if (aiFoot == "left") {
-//   [ai].src = `./images/${imageFile}_right.png`;
-//   aiFoot = "right";
-// } else {
-//   [ai].src = `./images/${imageFile}_right.png`;
-//   aiFoot = "left";
-// }
-//   }
-// }
-// else {
-//   while (aiStatus === "alive") {
-//     aiPosition = parseFloat(aiPosition) + step;
-//     aiStyle = `${aiPosition}px`;
-//     if (aiFoot == "left") {
-//       character.src = `./images/${ai}_right.png`;
-//       aiFoot = "right";
-//     } else {
-//       character.src = `./images/${ai}_right.png`;
-//       aiFoot = "left";
-//     }
-//     checkAiStatus(ai);
-//   }
-// }
-// }
+const ai_2 = {
+  name: "ai_2",
+  tag: function () {
+    return document.querySelector("#ai-2");
+  },
+  foot: "left",
+  status: "alive",
+  position: "5px",
+  termination: function () {
+    return Math.floor(Math.random() * 400 + 200);
+  },
+  step: function () {
+    return Math.ceil(Math.random() * 2 + 1);
+  },
+};
 
-// async function checkAiStatus(ai, aiStatus) {
-//   if (lookForward === true) {
-//     for (const turret of turrets) {
-//       turret.src = "./images/turret_px_shoot.png";
-//     }
-//     aiStatus = "dead";
-//     await delay(150);
-//     for (const turret of turrets) {
-//       turret.src = "./images/turret_px.png";
-//     }
-//     [ai].src = "./images/tombstone.png";
-//   }
-// }
+async function move(ai) {
+  if (ai.status == "alive") {
+    if (parseFloat(ai.position) < ai.termination()) {
+      if (lookForward === false) {
+        ai.position = parseFloat(ai.position) + ai.step();
+        ai.tag().style.left = `${ai.position}px`;
+        aiFeet(ai);
+        await delay(150);
+        return move(ai);
+      }
+    } else {
+      ai.position = parseFloat(ai.position) + ai.step();
+      ai.tag().style.left = `${ai.position}px`;
+      aiFeet(ai);
+      await delay(150);
+      checkAiStatus(ai);
+      return move(ai);
+    }
+  }
+}
+
+async function aiFeet(ai) {
+  if (ai.foot == "left") {
+    ai.tag().src = `./images/${ai.name}_right.png`;
+    ai.foot = "right";
+  } else {
+    ai.tag().src = `./images/${ai.name}_left.png`;
+    ai.foot = "left";
+  }
+}
+
+async function checkAiStatus(ai) {
+  if (lookForward === true) {
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px_shoot.png";
+    }
+    ai.status = "dead";
+    await delay(150);
+    for (const turret of turrets) {
+      turret.src = "./images/turret_px.png";
+    }
+    ai.tag().src = "./images/tombstone.png";
+  }
+}
