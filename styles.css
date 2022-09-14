@@ -5,6 +5,9 @@ body {
   justify-content: center;
   margin: auto;
   margin-top: 5vh;
+  background-image: url("./images/playground.jpg");
+  background-position: center;
+  filter: contrast(105%);
 }
 
 .game-window {
