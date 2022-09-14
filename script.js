@@ -10,6 +10,7 @@ async function startGame() {
   await delay(750);
   gameNoti.innerText = "Get ready!";
   await delay(1000);
+  countdownAud.play();
   gameNoti.innerText = "3";
   await delay(1000);
   gameNoti.innerText = "2";
@@ -39,16 +40,11 @@ async function countdown() {
     time.innerText = timer;
   }
   if (timer == 0 && gameState == "running") {
-    for (const turret of turrets) {
-      turret.src = "./images/turret_px_shoot.png";
-    }
-    gameState = "end";
-    await delay(150);
-    for (const turret of turrets) {
-      turret.src = "./images/turret_px.png";
-    }
+    fireTurrets();
     character.src = "./images/tombstone.png";
-    gameNoti.innerText = "You lost!";
+    gameNoti.innerText = "Game Over";
+    await delay(1500);
+    gameover.play();
     currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 4;
     character_indicator.style.left = `${currentIndicatorLocation}px`;
     character_indicator.src = "./images/loss_indicator.png";
@@ -65,6 +61,15 @@ const scan = new Audio();
 scan.src = "./sound/scan.mp3";
 const scanTime = 3.5;
 let scanDuration = 3500;
+
+const countdownAud = new Audio();
+countdownAud.src = "./sound/countdown.mp3";
+const gunshot = new Audio();
+gunshot.src = "./sound/gunshot.mp3";
+const win = new Audio();
+win.src = "./sound/win.wav";
+const gameover = new Audio();
+gameover.src = "./sound/gameover.mp3";
 
 function sing() {
   song.playbackRate = Math.random() + 0.75;
@@ -90,11 +95,9 @@ function turnForward() {
 
 function turnBack() {
   document.querySelector(".doll").src = "./images/doll_green.png";
-  setTimeout(() => {
-    lookForward = false;
-    move(ai_1);
-    move(ai_2);
-  }, 150);
+  lookForward = false;
+  move(ai_1);
+  move(ai_2);
   document.querySelector(".game-window").style.borderColor = "#32C732";
   document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
 }
@@ -144,12 +147,13 @@ window.addEventListener("keydown", function (e) {
 
 //Game logic
 const turrets = document.querySelectorAll(".turret");
+
 async function fireTurrets() {
   for (const turret of turrets) {
     turret.src = "./images/turret_px_shoot.png";
   }
-  gameState = "end";
-  await delay(150);
+  gunshot.play();
+  await delay(500);
   for (const turret of turrets) {
     turret.src = "./images/turret_px.png";
   }
@@ -159,11 +163,14 @@ async function checkGameStatus() {
   if (gameState == "running") {
     if (lookForward === true) {
       fireTurrets();
+      gameState = "end";
       currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 3;
       character_indicator.style.left = `${currentIndicatorLocation}px`;
       character_indicator.src = "./images/loss_indicator.png";
       character.src = "./images/tombstone.png";
-      gameNoti.innerText = "You lost!";
+      gameNoti.innerText = "Game Over";
+      await delay(1500);
+      gameover.play();
     } else if (parseFloat(character.style.left) > 887) {
       gameState = "end";
       gameNoti.innerText = "Congratulations, you won!";
@@ -185,6 +192,7 @@ async function pose() {
   character_indicator.style.left = `${currentIndicatorLocation}px`;
   character_indicator.src = "./images/win_indicator.png";
   character.src = "./images/character_win.png";
+  win.play();
 }
 
 //ai movement
@@ -253,14 +261,8 @@ async function aiFeet(ai) {
 
 async function checkAiStatus(ai) {
   if (lookForward === true) {
-    for (const turret of turrets) {
-      turret.src = "./images/turret_px_shoot.png";
-    }
+    fireTurrets();
     ai.status = "dead";
-    await delay(150);
-    for (const turret of turrets) {
-      turret.src = "./images/turret_px.png";
-    }
     ai.tag().src = "./images/tombstone.png";
   }
 }
