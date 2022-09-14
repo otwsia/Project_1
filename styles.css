@@ -79,6 +79,7 @@ body {
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .doll-lane {
@@ -105,17 +106,8 @@ body {
   bottom: -10%;
 }
 
-.player-lane {
-  height: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-}
-
 #ai-1 {
-  height: 27%;
+  height: 11%;
   width: auto;
   position: absolute;
   left: 8px;
@@ -123,23 +115,23 @@ body {
 }
 
 #ai-2 {
-  height: 24%;
+  height: 20%;
   width: auto;
   position: absolute;
   left: 5px;
-  bottom: 180px;
+  bottom: -20px;
 }
 
 #player_indicator {
-  height: 7%;
+  height: 2.5%;
   width: auto;
   position: absolute;
-  left: 18px;
-  bottom: 110px;
+  left: 16px;
+  bottom: 98px;
 }
 
 #player {
-  height: 25%;
+  height: 10%;
   width: auto;
   position: absolute;
   left: 5px;
