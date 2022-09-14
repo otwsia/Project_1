@@ -55,6 +55,18 @@ async function countdown() {
   }
 }
 
+//Sound
+const song = new Audio();
+song.src = "./sound/song.mp3";
+const songTime = 4.5;
+let duration = 0;
+function sing() {
+  duration = Math.round(Math.random() * 3000 + 3000);
+  console.log(Math.round((songTime / (duration / 1000)) * 2) / 2);
+  song.playbackRate = Math.round((songTime / (duration / 1000)) * 2) / 2;
+  song.play();
+}
+
 //Doll movement
 let lookForward = false;
 
@@ -76,19 +88,24 @@ function turnBack() {
   document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
 }
 
-function check(delay) {
-  return new Promise((resolve) => setTimeout(resolve, delay));
-}
+// function check(delay) {
+//   return new Promise((resolve) => {
+//     setTimeout(resolve, delay);
+//   });
+// }
 
-function sing(delay) {
-  return new Promise((resolve) => setTimeout(resolve, delay));
-}
+// function sing(delay) {
+//   return new Promise((resolve) => setTimeout(resolve, delay));
+// }
 
 async function start() {
   while (timer > 0) {
-    await sing(Math.random() * 3000 + 3000);
+    sing();
+    await delay(duration);
+    // await sing(Math.round(Math.random() * 3000 + 3000));
     turnForward();
-    await check(Math.random() * 2000 + 2000);
+    // await check(Math.round(Math.random() * 2000 + 1000));
+    await delay(Math.round(Math.random() * 2000 + 1000));
     turnBack();
     return start();
   }
