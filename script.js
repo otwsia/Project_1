@@ -58,13 +58,24 @@ async function countdown() {
 //Sound
 const song = new Audio();
 song.src = "./sound/song.mp3";
-const songTime = 4.5;
-let duration = 0;
+const songTime = 5;
+let songDuration = 5000;
+
+const scan = new Audio();
+scan.src = "./sound/scan.mp3";
+const scanTime = 3.5;
+let scanDuration = 3500;
+
 function sing() {
-  duration = Math.round(Math.random() * 3000 + 3000);
-  console.log(Math.round((songTime / (duration / 1000)) * 2) / 2);
-  song.playbackRate = Math.round((songTime / (duration / 1000)) * 2) / 2;
+  song.playbackRate = Math.random() + 0.75;
+  songDuration = Math.round((songTime / song.playbackRate) * 1000);
   song.play();
+}
+
+function screen() {
+  scan.playbackRate = Math.random() + 0.75;
+  scanDuration = Math.round((scanTime / scan.playbackRate) * 1000);
+  scan.play();
 }
 
 //Doll movement
@@ -74,7 +85,7 @@ function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
   document.querySelector(".game-window").style.borderColor = "#FF1205";
   document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #FF1205";
-  setTimeout(() => (lookForward = true), 400);
+  setTimeout(() => (lookForward = true), 300);
 }
 
 function turnBack() {
@@ -83,29 +94,18 @@ function turnBack() {
     lookForward = false;
     move(ai_1);
     move(ai_2);
-  }, 200);
+  }, 150);
   document.querySelector(".game-window").style.borderColor = "#32C732";
   document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
 }
 
-// function check(delay) {
-//   return new Promise((resolve) => {
-//     setTimeout(resolve, delay);
-//   });
-// }
-
-// function sing(delay) {
-//   return new Promise((resolve) => setTimeout(resolve, delay));
-// }
-
 async function start() {
   while (timer > 0) {
     sing();
-    await delay(duration);
-    // await sing(Math.round(Math.random() * 3000 + 3000));
+    await delay(songDuration);
     turnForward();
-    // await check(Math.round(Math.random() * 2000 + 1000));
-    await delay(Math.round(Math.random() * 2000 + 1000));
+    screen();
+    await delay(scanDuration);
     turnBack();
     return start();
   }
