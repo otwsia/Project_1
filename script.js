@@ -27,6 +27,7 @@ async function startGame() {
 
 const startBtn = document.querySelector(".start-btn");
 const muteBtn = document.querySelector(".mute-btn");
+const restartBtn = document.querySelector(".restart-btn");
 const gameWindow = document.querySelector(".game-window");
 let sound = "on";
 
@@ -35,8 +36,9 @@ startBtn.addEventListener(
   () => {
     startBtn.style.display = "none";
     gameWindow.style.display = "block";
-    startGame();
     muteBtn.style.display = "block";
+    restartBtn.style.display = "block";
+    startGame();
   },
   { once: true }
 );
@@ -61,6 +63,10 @@ muteBtn.addEventListener("click", () => {
     muteBtn.src = "./images/sound.png";
     sound = "on";
   }
+});
+
+restartBtn.addEventListener("click", () => {
+  window.location.reload();
 });
 
 //Timer
