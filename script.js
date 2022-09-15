@@ -7,9 +7,7 @@ function delay(time) {
 }
 
 async function startGame() {
-  await delay(750);
-  gameNoti.innerText = "Get ready!";
-  await delay(1000);
+  await delay(1500);
   countdownAud.play();
   gameNoti.innerText = "3";
   await delay(1000);
@@ -27,7 +25,43 @@ async function startGame() {
   move(ai_2);
 }
 
-window.addEventListener("click", () => startGame(), { once: true });
+const startBtn = document.querySelector(".start-btn");
+const muteBtn = document.querySelector(".mute-btn");
+const gameWindow = document.querySelector(".game-window");
+let sound = "on";
+
+startBtn.addEventListener(
+  "click",
+  () => {
+    startBtn.style.display = "none";
+    gameWindow.style.display = "block";
+    startGame();
+    muteBtn.style.display = "block";
+  },
+  { once: true }
+);
+
+muteBtn.addEventListener("click", () => {
+  if (sound == "on") {
+    song.muted = true;
+    scan.muted = true;
+    countdownAud.muted = true;
+    gunshot.muted = true;
+    win.muted = true;
+    gameover.muted = true;
+    muteBtn.src = "./images/mute.png";
+    sound = "off";
+  } else {
+    song.muted = false;
+    scan.muted = false;
+    countdownAud.muted = false;
+    gunshot.muted = false;
+    win.muted = false;
+    gameover.muted = false;
+    muteBtn.src = "./images/sound.png";
+    sound = "on";
+  }
+});
 
 //Timer
 let timer = 60;
@@ -45,7 +79,7 @@ async function countdown() {
     gameNoti.innerText = "Game Over";
     await delay(1500);
     gameover.play();
-    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 4;
+    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 2;
     character_indicator.style.left = `${currentIndicatorLocation}px`;
     character_indicator.src = "./images/loss_indicator.png";
   }
@@ -88,8 +122,8 @@ let lookForward = false;
 
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
-  document.querySelector(".game-window").style.borderColor = "#FF1205";
-  document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #FF1205";
+  // document.querySelector(".game-window").style.borderColor = "#bb1e1040";
+  document.querySelector(".game-window").style.boxShadow = "0 0 20px #bb1e10";
   setTimeout(() => (lookForward = true), 300);
 }
 
@@ -98,8 +132,8 @@ function turnBack() {
   lookForward = false;
   move(ai_1);
   move(ai_2);
-  document.querySelector(".game-window").style.borderColor = "#32C732";
-  document.querySelector(".game-window").style.boxShadow = "0 0 1.5vh #32c732";
+  document.querySelector(".game-window").style.borderColor = "#33a53240";
+  document.querySelector(".game-window").style.boxShadow = "0 0 20px #33a532";
 }
 
 async function start() {
@@ -119,7 +153,7 @@ const character = document.getElementById("player");
 const character_indicator = document.getElementById("player_indicator");
 let currentPlayerLocation = "5px";
 let currentIndicatorLocation = "16px";
-const step = 2.5;
+const step = 2;
 let foot = "left";
 
 function movement() {
@@ -164,16 +198,16 @@ async function checkGameStatus() {
     if (lookForward === true) {
       fireTurrets();
       gameState = "end";
-      currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 3;
+      currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 2;
       character_indicator.style.left = `${currentIndicatorLocation}px`;
       character_indicator.src = "./images/loss_indicator.png";
       character.src = "./images/tombstone.png";
       gameNoti.innerText = "Game Over";
       await delay(1500);
       gameover.play();
-    } else if (parseFloat(character.style.left) > 887) {
+    } else if (parseFloat(character.style.left) > 711) {
       gameState = "end";
-      gameNoti.innerText = "Congratulations, you won!";
+      gameNoti.innerText = "You Win!";
       pose();
     }
   }
@@ -184,11 +218,11 @@ async function pose() {
   await delay(500);
   character.src = "./images/character_look_back.png";
   await delay(1500);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 16; i++) {
     movement();
     await delay(300);
   }
-  currentIndicatorLocation = parseFloat(currentIndicatorLocation) - 3;
+  currentIndicatorLocation = parseFloat(currentIndicatorLocation) - 4;
   character_indicator.style.left = `${currentIndicatorLocation}px`;
   character_indicator.src = "./images/win_indicator.png";
   character.src = "./images/character_win.png";
