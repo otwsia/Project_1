@@ -1,36 +1,13 @@
-//Game notification
-const gameNoti = document.querySelector(".game-notification");
-let gameState = "loading";
-
-function delay(time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-async function startGame() {
-  await delay(1500);
-  countdownAud.play();
-  gameNoti.innerText = "3";
-  await delay(1000);
-  gameNoti.innerText = "2";
-  await delay(1000);
-  gameNoti.innerText = "1";
-  await delay(1000);
-  gameNoti.innerText = "Go!";
-  gameState = "running";
-  await delay(1000);
-  gameNoti.innerText = "Hold Space to move!";
-  start();
-  countdown();
-  move(ai_1);
-  move(ai_2);
-}
-
+//===================================================================================================================================================================================================================
+//Buttons
+//Button declaration
 const startBtn = document.querySelector(".start-btn");
 const muteBtn = document.querySelector(".mute-btn");
 const restartBtn = document.querySelector(".restart-btn");
 const gameWindow = document.querySelector(".game-window");
 let sound = "on";
 
+//Start button
 startBtn.addEventListener(
   "click",
   () => {
@@ -43,6 +20,7 @@ startBtn.addEventListener(
   { once: true }
 );
 
+//Mute button
 muteBtn.addEventListener("click", () => {
   if (sound == "on") {
     song.muted = true;
@@ -65,14 +43,24 @@ muteBtn.addEventListener("click", () => {
   }
 });
 
+//Restart button
 restartBtn.addEventListener("click", () => {
   window.location.reload();
 });
 
+//===================================================================================================================================================================================================================
 //Timer
 let timer = 60;
+let gameState = "loading";
 const time = document.querySelector(".game-timer");
+const gameNoti = document.querySelector(".game-notification");
 
+//Time delayer
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+//Game clock logic
 async function countdown() {
   while (timer > 0) {
     await delay(1000);
@@ -81,17 +69,34 @@ async function countdown() {
   }
   if (timer == 0 && gameState == "running") {
     fireTurrets();
-    character.src = "./images/tombstone.png";
-    gameNoti.innerText = "Game Over";
-    await delay(1500);
-    gameover.play();
-    currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 2;
-    character_indicator.style.left = `${currentIndicatorLocation}px`;
-    character_indicator.src = "./images/loss_indicator.png";
+    characterDeath();
   }
 }
 
+//===================================================================================================================================================================================================================
+//Game initialization
+async function startGame() {
+  await delay(1500);
+  countdownAud.play();
+  gameNoti.innerText = "3";
+  await delay(1000);
+  gameNoti.innerText = "2";
+  await delay(1000);
+  gameNoti.innerText = "1";
+  await delay(1000);
+  gameNoti.innerText = "Go!";
+  gameState = "running";
+  await delay(1000);
+  gameNoti.innerText = "Hold Space to move!";
+  start();
+  countdown();
+  move(ai_1);
+  move(ai_2);
+}
+
+//===================================================================================================================================================================================================================
 //Sound
+//Audio declaration
 const song = new Audio();
 song.src = "./sound/song.mp3";
 const songTime = 5;
@@ -111,24 +116,28 @@ win.src = "./sound/win.wav";
 const gameover = new Audio();
 gameover.src = "./sound/gameover.mp3";
 
+//Doll singing playback
 function sing() {
   song.playbackRate = Math.random() + 0.75;
   songDuration = Math.round((songTime / song.playbackRate) * 1000);
   song.play();
 }
 
+//Doll scanning playback
 function screen() {
   scan.playbackRate = Math.random() + 0.75;
   scanDuration = Math.round((scanTime / scan.playbackRate) * 1000);
   scan.play();
 }
 
-//Doll movement
+//===================================================================================================================================================================================================================
+//Doll
+//Doll movement and scanning phase indicator
 let lookForward = false;
 
 function turnForward() {
   document.querySelector(".doll").src = "./images/doll_red.png";
-  // document.querySelector(".game-window").style.borderColor = "#bb1e1040";
+  document.querySelector(".game-window").style.borderColor = "#bb1e1040";
   document.querySelector(".game-window").style.boxShadow = "0 0 20px #bb1e10";
   setTimeout(() => (lookForward = true), 300);
 }
@@ -142,6 +151,7 @@ function turnBack() {
   document.querySelector(".game-window").style.boxShadow = "0 0 20px #33a532";
 }
 
+//Doll logic
 async function start() {
   while (timer > 0) {
     sing();
@@ -154,6 +164,8 @@ async function start() {
   }
 }
 
+//===================================================================================================================================================================================================================
+//Character
 //Character movement
 const character = document.getElementById("player");
 const character_indicator = document.getElementById("player_indicator");
@@ -176,6 +188,7 @@ function movement() {
   }
 }
 
+//Movement input checker
 window.addEventListener("keydown", function (e) {
   if (e.code == "Space") {
     if (gameState == "running") {
@@ -185,7 +198,9 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
+//===================================================================================================================================================================================================================
 //Game logic
+//Turrets firing
 const turrets = document.querySelectorAll(".turret");
 
 async function fireTurrets() {
@@ -199,27 +214,19 @@ async function fireTurrets() {
   }
 }
 
-async function checkGameStatus() {
-  if (gameState == "running") {
-    if (lookForward === true) {
-      fireTurrets();
-      gameState = "end";
-      currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 2;
-      character_indicator.style.left = `${currentIndicatorLocation}px`;
-      character_indicator.src = "./images/loss_indicator.png";
-      character.src = "./images/tombstone.png";
-      gameNoti.innerText = "Game Over";
-      await delay(1500);
-      gameover.play();
-    } else if (parseFloat(character.style.left) > 711) {
-      gameState = "end";
-      gameNoti.innerText = "You Win!";
-      pose();
-    }
-  }
+//Character death sequence
+async function characterDeath() {
+  gameState = "end";
+  character.src = "./images/tombstone.png";
+  gameNoti.innerText = "Game Over";
+  currentIndicatorLocation = parseFloat(currentIndicatorLocation) + 2;
+  character_indicator.style.left = `${currentIndicatorLocation}px`;
+  character_indicator.src = "./images/loss_indicator.png";
+  await delay(1500);
+  gameover.play();
 }
 
-//Pose
+//Winning pose
 async function pose() {
   await delay(500);
   character.src = "./images/character_look_back.png";
@@ -235,7 +242,23 @@ async function pose() {
   win.play();
 }
 
-//ai movement
+//win/loss checker
+async function checkGameStatus() {
+  if (gameState == "running") {
+    if (lookForward === true) {
+      fireTurrets();
+      characterDeath();
+    } else if (parseFloat(character.style.left) > 711) {
+      gameState = "end";
+      gameNoti.innerText = "You Win!";
+      pose();
+    }
+  }
+}
+
+//===================================================================================================================================================================================================================
+//ai
+//ai objects
 const ai_1 = {
   name: "ai_1",
   tag: function () {
@@ -268,6 +291,17 @@ const ai_2 = {
   },
 };
 
+//ai movement
+async function aiFeet(ai) {
+  if (ai.foot == "left") {
+    ai.tag().src = `./images/${ai.name}_right.png`;
+    ai.foot = "right";
+  } else {
+    ai.tag().src = `./images/${ai.name}_left.png`;
+    ai.foot = "left";
+  }
+}
+
 async function move(ai) {
   if (ai.status == "alive") {
     if (parseFloat(ai.position) < ai.termination()) {
@@ -289,16 +323,7 @@ async function move(ai) {
   }
 }
 
-async function aiFeet(ai) {
-  if (ai.foot == "left") {
-    ai.tag().src = `./images/${ai.name}_right.png`;
-    ai.foot = "right";
-  } else {
-    ai.tag().src = `./images/${ai.name}_left.png`;
-    ai.foot = "left";
-  }
-}
-
+//ai termination
 async function checkAiStatus(ai) {
   if (lookForward === true) {
     fireTurrets();
