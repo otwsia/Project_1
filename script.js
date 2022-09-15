@@ -26,17 +26,42 @@ async function startGame() {
 }
 
 const startBtn = document.querySelector(".start-btn");
+const muteBtn = document.querySelector(".mute-btn");
 const gameWindow = document.querySelector(".game-window");
+let sound = "on";
+
 startBtn.addEventListener(
   "click",
   () => {
     startBtn.style.display = "none";
     gameWindow.style.display = "block";
-
     startGame();
+    muteBtn.style.display = "block";
   },
   { once: true }
 );
+
+muteBtn.addEventListener("click", () => {
+  if (sound == "on") {
+    song.muted = true;
+    scan.muted = true;
+    countdownAud.muted = true;
+    gunshot.muted = true;
+    win.muted = true;
+    gameover.muted = true;
+    muteBtn.src = "./images/mute.png";
+    sound = "off";
+  } else {
+    song.muted = false;
+    scan.muted = false;
+    countdownAud.muted = false;
+    gunshot.muted = false;
+    win.muted = false;
+    gameover.muted = false;
+    muteBtn.src = "./images/sound.png";
+    sound = "on";
+  }
+});
 
 //Timer
 let timer = 60;

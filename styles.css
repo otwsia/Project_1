@@ -33,14 +33,11 @@ span {
   margin: 5px;
   font-weight: bold;
   padding: 10px 10px 10px 10px;
-  background-color: lightgray;
-  text-shadow: -1px -1px darkgray, 1px 1px white;
+  background-color: #3b3b3b;
+  text-shadow: 1px 1px #ed1b76;
   color: #f44786;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -o-border-radius: 10px;
   border-radius: 10px;
-  box-shadow: 0 0.2em gray;
+  box-shadow: 0 0.2em #232323;
   cursor: pointer;
   top: 320px;
   left: 330px;
@@ -48,6 +45,18 @@ span {
   width: 130px;
   position: absolute;
   font-size: 40px;
+}
+
+.mute-btn {
+  height: 5%;
+  width: auto;
+  position: absolute;
+  top: 35px;
+  right: 30px;
+  top: 175px;
+  z-index: 10;
+  display: none;
+  cursor: pointer;
 }
 
 .game-window {
