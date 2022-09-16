@@ -41,14 +41,14 @@
 
     - Game window
       A game window that is split in half.
-      > The top displays the game notifications and timer.
-      > The bottom containd the player, finish line and doll.
+      - The top displays the game notifications and timer.
+      - The bottom containd the player, finish line and doll.
     - Game notification bar
       A notification bar that displayd differnent phrases at various points of the game.
-      > countdown sequence upon game initialization
-      > Game instructions during play
-      > Congratulations upon win
-      > Game over upon loss
+      - Countdown sequence upon game initialization
+      - Game instructions during play
+      - Congratulations upon win
+      - Game over upon loss
     - Game timer
       A timer that counts down from 60 to 0 seconds.
     - Playable character
@@ -79,12 +79,12 @@
 
     - Sound
       Sound was included for the following game functions:
-      > Game initialization countdown
-      > Doll singing (random playback speed in-sync with doll movement)
-      > Doll scanning (random playback speed in-sync with doll movement)
-      > Turret firing
-      > Game over
-      > Win sequence
+      - Game initialization countdown
+      - Doll singing (random playback speed in-sync with doll movement)
+      - Doll scanning (random playback speed in-sync with doll movement)
+      - Turret firing
+      - Game over
+      - Win sequence
     - Game title
       A game title with unique styling was added above the game window.
     - Page background
@@ -93,9 +93,9 @@
       A start screen was added to hide the game window before initialization.
     - Buttons
       The following buttons were included:
-      > Start button on start screen
-      > Restart button in game window (reverts to start screen)
-      > Mute button in game window
+      - Start button on start screen
+      - Restart button in game window (reverts to start screen)
+      - Mute button in game window
     - Game window glow
       A glow was included around the game window to reflect the colour state of the game.
 
