@@ -115,6 +115,8 @@
 **6. Other potential features**
 
     - Character selection menu
-        Include menu for character selection and retool player sprites to reflect choice. - Retooling restart button
-        Upon click to revert to countdown sequence instead of start menu - Include other game modes
+        Include menu for character selection and retool player sprites to reflect choice.
+    - Retooling restart button
+        Upon click to revert to countdown sequence instead of start menu
+    - Include other game modes
         Recreate the other games from the TV series and include them as playable game modes
