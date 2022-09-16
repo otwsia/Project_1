@@ -21,7 +21,6 @@ body {
   font-size: 8vh;
   font-family: "Righteous", cursive;
   margin-top: 3vh;
-  -webkit-text-size-adjust: none;
 }
 
 span {
