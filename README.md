@@ -58,16 +58,46 @@
       A doll that turns back and forth randomly to signify the different states of the game.
 
     Stretch goal 1: Turrets and AI
-    The first stretch goal was to include the turrets which would fire upon game loss and include 2 other AI.
+    The first stretch goal was to include the turrets which would fire upon game loss and 2 other AI.
     Progess here included:
 
-    - Playable character
-      The playable character was updated with a 8-bit sprite capable of animated movement
     - Turrets
-
+      Turrets that would fire upon game loss were included.
+      Firing is distinguished by the red auro at the end of the turrets.
     - AI
+      2 other AIs were included with similar movement animations as the playable character.
+      However, these AIs were coded to lose at random points of the game.
+    - Playable character
+      The playable character was updated with a 8-bit sprite capable of animated movement.
+      The sprite changes to a tombstone upon loss.
+      The player also has an indicator above their head to distinguish them from the AI.
+      The indicator changes to a skull upon loss and a crown upon win.
 
     Stretch goal 2: Sound and Aesthetics
+    The second stretch goal was to include sound that syncs with existing game functions and enhance aesthetics.
+    Progress here included:
+
+    - Sound
+      Sound was included for the following game functions:
+      > Game initialization countdown
+      > Doll singing (random playback speed in-sync with doll movement)
+      > Doll scanning (random playback speed in-sync with doll movement)
+      > Turret firing
+      > Game over
+      > Win sequence
+    - Game title
+      A game title with unique styling was added above the game window.
+    - Page background
+      A page background was added around the game window.
+    - Start screen
+      A start screen was added to hide the game window before initialization.
+    - Buttons
+      The following buttons were included:
+      > Start button on start screen
+      > Restart button in game window (reverts to start screen)
+      > Mute button in game window
+    - Game window glow
+      A glow was included around the game window to reflect the colour state of the game.
 
 5.  Unsolved problems
     There seems to be a bug with the game title alignment on the Safari web browser that is not apparent on Chrome.
