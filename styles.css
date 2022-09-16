@@ -25,6 +25,7 @@ body {
 
 span {
   color: #f44786;
+  -webkit-text-size-adjust: none;
 }
 
 .start-btn {
